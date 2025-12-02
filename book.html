@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>احجز رحلتك | حملة سعود القويضي</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #FF9800;
+      --secondary: #FF5722;
+      --accent: #FFC107;
+      --accent-dark: #FF8F00;
+      --light: #FFF8E1;
+      --bg: #f8fafc;
+      --dark: #333333;
+    }
+
+    body {
+      font-family: "Tajawal", sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--dark);
+      overflow-x: hidden;
+      padding-top: 0; /* تم إزالة المساحة الخاصة بالـ navbar */
+    }
+
+    /* ===== Banner ===== */
+    .banner {
+      background: linear-gradient(135deg, rgba(51, 51, 51, 0.9), rgba(85, 85, 85, 0.85)),
+        url('https://tawaf-kaaba.site/img/66.png') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 70px 15px; /* تقليل الحشو */
+    }
+
+    .banner h1 { 
+      font-size: 2.2rem; /* تصغير حجم الخط */
+      margin-bottom: 15px;
+      color: var(--accent);
+      text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+    
+    .banner p { 
+      color: #e2e8f0; 
+      font-size: 1.1rem; /* تصغير حجم الخط */
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ===== FORM ===== */
+    .form-section {
+      background: #fff;
+      max-width: 700px; /* تقليل العرض من 800px إلى 700px */
+      margin: -40px auto 60px; /* تقليل الهامش */
+      border-radius: 18px; /* تصغير الزوايا قليلاً */
+      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+      padding: 25px 20px; /* تقليل الحشو الداخلي */
+      border: 2px solid var(--accent);
+    }
+
+    .form-header {
+      display: flex; 
+      justify-content: space-around; 
+      align-items: center; 
+      margin-bottom: 25px; /* تقليل الهامش */
+      position: relative;
+    }
+    
+    .form-header::before {
+      content: ""; 
+      position: absolute; 
+      top: 50%; 
+      left: 8%; /* تقليل المسافة من الجوانب */
+      right: 8%;
+      height: 4px; 
+      background: #FFE0B2; 
+      transform: translateY(-50%);
+      border-radius: 5px;
+    }
+    
+    .step {
+      background: #FFE0B2; 
+      color: var(--dark); 
+      border-radius: 50%; 
+      width: 40px; /* تصغير حجم الخطوة */
+      height: 40px;
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-weight: bold; 
+      z-index: 1;
+      transition: all 0.3s ease;
+      border: 3px solid #FFE0B2;
+      font-size: 1rem; /* تصغير حجم الخط */
+    }
+    
+    .step.active { 
+      background: var(--primary); 
+      color: #fff; 
+      transform: scale(1.1); 
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(255, 152, 0, 0.2); /* تقليل الظل */
+    }
+    
+    .form-step { 
+      display: none; 
+      animation: fadeSlide 0.5s ease forwards; 
+    }
+    
+    .form-step.active { 
+      display: block; 
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateX(50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    label { 
+      display: block; 
+      margin-bottom: 8px; /* تقليل المسافة */
+      font-weight: 700; 
+      color: var(--dark);
+      font-size: 1rem; /* تصغير حجم الخط */
+      padding-right: 5px;
+    }
+
+    /* Creative Input Styles */
+    .creative-select {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* تصغير الحد الأدنى */
+      gap: 12px; /* تقليل المسافة بين العناصر */
+      margin-bottom: 20px; /* تقليل الهامش */
+    }
+
+    .select-option {
+      background: #FFF8E1;
+      border: 3px solid #FFE0B2;
+      border-radius: 12px; /* تصغير الزوايا */
+      padding: 15px 12px; /* تقليل الحشو */
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .select-option:hover {
+      transform: translateY(-3px); /* تقليل الحركة */
+      border-color: var(--primary);
+      box-shadow: 0 6px 12px rgba(255, 152, 0, 0.15); /* تقليل الظل */
+    }
+
+    .select-option.selected {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(255, 152, 0, 0.25); /* تقليل الظل */
+    }
+
+    .select-option i {
+      font-size: 2rem; /* تصغير الأيقونات */
+      margin-bottom: 10px; /* تقليل المسافة */
+      color: var(--primary);
+      transition: all 0.3s ease;
+    }
+
+    .select-option.selected i {
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .select-option h3 {
+      margin: 0 0 6px 0;
+      font-size: 1rem; /* تصغير حجم الخط */
+    }
+
+    .select-option p {
+      margin: 0;
+      font-size: 0.85rem; /* تصغير حجم الخط */
+      color: #666;
+      line-height: 1.3;
+    }
+
+    .select-option.selected p {
+      color: rgba(255,255,255,0.9);
+    }
+
+    .select-option .badge {
+      position: absolute;
+      top: 8px; /* تعديل الموضع */
+      left: 8px;
+      background: var(--accent);
+      color: var(--dark);
+      padding: 2px 6px; /* تقليل الحشو */
+      border-radius: 15px; /* تصغير الزوايا */
+      font-size: 0.75rem; /* تصغير حجم الخط */
+      font-weight: bold;
+    }
+
+    /* Number Selector */
+    .number-selector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px; /* تقليل المسافة */
+      margin-bottom: 20px; /* تقليل الهامش */
+      background: #FFF8E1;
+      padding: 20px; /* تقليل الحشو */
+      border-radius: 12px; /* تصغير الزوايا */
+      border: 2px solid #FFE0B2;
+    }
+
+    .number-btn {
+      width: 45px; /* تصغير الأزرار */
+      height: 45px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      font-size: 1.3rem; /* تصغير حجم الخط */
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .number-btn:hover {
+      background: var(--secondary);
+      transform: scale(1.05); /* تقليل الحركة */
+      box-shadow: 0 4px 10px rgba(255, 87, 34, 0.3); /* تقليل الظل */
+    }
+
+    .number-display {
+      font-size: 2rem; /* تصغير حجم العرض */
+      font-weight: bold;
+      color: var(--dark);
+      min-width: 70px; /* تقليل العرض */
+      text-align: center;
+    }
+
+    .number-label {
+      text-align: center;
+      margin-bottom: 8px; /* تقليل المسافة */
+    }
+
+    .number-label i {
+      color: var(--primary);
+      margin-left: 6px; /* تقليل المسافة */
+      font-size: 1.1rem; /* تصغير حجم الأيقونة */
+    }
+
+    /* Date Selector */
+    .date-selector {
+      background: #FFF8E1;
+      padding: 20px; /* تقليل الحشو */
+      border-radius: 12px; /* تصغير الزوايا */
+      border: 2px solid #FFE0B2;
+      margin-bottom: 20px; /* تقليل الهامش */
+    }
+
+    .date-input {
+      width: 100%;
+      padding: 12px; /* تقليل الحشو */
+      border: 2px solid #FFCC80;
+      border-radius: 8px; /* تصغير الزوايا */
+      font-size: 1rem; /* تصغير حجم الخط */
+      font-family: "Tajawal", sans-serif;
+      text-align: center;
+      background: white;
+      color: var(--dark);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .date-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2); /* تقليل الظل */
+    }
+
+    /* Text Input */
+    .text-input-container {
+      margin-bottom: 20px; /* تقليل الهامش */
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 15px 18px; /* تقليل الحشو */
+      border: 2px solid #FFCC80;
+      border-radius: 10px; /* تصغير الزوايا */
+      font-size: 1rem; /* تصغير حجم الخط */
+      font-family: "Tajawal", sans-serif;
+      background: white;
+      color: var(--dark);
+      transition: all 0.3s ease;
+      box-sizing: border-box; /* لمنع تجاوز العرض */
+    }
+
+    .text-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2); /* تقليل الظل */
+      transform: translateY(-2px);
+    }
+
+    .text-input-container label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px; /* تقليل المسافة */
+    }
+
+    .text-input-container i {
+      color: var(--primary);
+      margin-left: 8px; /* تقليل المسافة */
+      font-size: 1.1rem; /* تصغير حجم الأيقونة */
+    }
+
+    /* Textarea */
+    .textarea-container {
+      margin-bottom: 20px; /* تقليل الهامش */
+    }
+
+    .textarea-input {
+      width: 100%;
+      min-height: 100px; /* تقليل الارتفاع */
+      padding: 15px 18px; /* تقليل الحشو */
+      border: 2px solid #FFCC80;
+      border-radius: 10px; /* تصغير الزوايا */
+      font-size: 1rem; /* تصغير حجم الخط */
+      font-family: "Tajawal", sans-serif;
+      background: white;
+      color: var(--dark);
+      transition: all 0.3s ease;
+      resize: vertical;
+      box-sizing: border-box; /* لمنع تجاوز العرض */
+    }
+
+    .textarea-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2); /* تقليل الظل */
+    }
+
+    /* Buttons */
+    .buttons { 
+      display: flex; 
+      justify-content: space-between; 
+      margin-top: 25px; /* تقليل الهامش */
+      padding-top: 20px;
+      border-top: 2px solid #FFE0B2;
+    }
+    
+    .btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+      color: white; 
+      border: none; 
+      border-radius: 10px; /* تصغير الزوايا */
+      padding: 14px 25px; /* تقليل الحشو */
+      font-size: 1rem; /* تصغير حجم الخط */
+      font-weight: 700; 
+      cursor: pointer; 
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 12px rgba(255, 152, 0, 0.3); /* تقليل الظل */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px; /* تقليل المسافة بين العناصر */
+    }
+    
+    .btn:hover { 
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      transform: translateY(-2px); /* تقليل الحركة */
+      box-shadow: 0 8px 15px rgba(255, 87, 34, 0.4); /* تقليل الظل */
+    }
+    
+    .btn:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(255, 87, 34, 0.3);
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: var(--dark);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* تقليل الظل */
+    }
+
+    .btn-secondary:hover {
+      background: #e0e0e0;
+      color: var(--dark);
+    }
+
+    .error-msg {
+      color: #f44336; 
+      font-size: 0.85rem; /* تصغير حجم الخط */
+      margin-top: 5px; 
+      margin-bottom: 10px; /* تقليل الهامش */
+      text-align: right; 
+      animation: fadeIn 0.3s ease;
+      padding-right: 5px;
+    }
+
+    .hidden-input {
+      display: none;
+    }
+
+    /* تعديلات للشاشات الصغيرة */
+    @media (max-width: 768px) {
+      .form-section {
+        max-width: 95%; /* استخدام نسبة مئوية أكبر للشاشات الصغيرة */
+        margin: -30px auto 40px;
+        padding: 20px 15px;
+        border-radius: 15px;
+      }
+      
+      .banner {
+        padding: 50px 15px;
+      }
+      
+      .banner h1 {
+        font-size: 1.8rem;
+      }
+      
+      .banner p {
+        font-size: 1rem;
+      }
+      
+      .creative-select {
+        grid-template-columns: 1fr; /* عمود واحد على الشاشات الصغيرة */
+        gap: 10px;
+      }
+      
+      .form-header::before {
+        left: 5%;
+        right: 5%;
+      }
+      
+      .step {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-section {
+        max-width: 98%; /* استخدام نسبة أكبر للشاشات الصغيرة جداً */
+        padding: 15px 12px;
+      }
+      
+      .number-selector {
+        padding: 15px;
+        gap: 10px;
+      }
+      
+      .number-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+      }
+      
+      .number-display {
+        font-size: 1.8rem;
+        min-width: 60px;
+      }
+      
+      .btn {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Banner -->
+  <section class="banner">
+    <h1>احجز رحلتك الآن</h1>
+    <p>راحة ورفاهية في كل تفاصيل رحلتك مع حملة سعود القويضي</p>
+  </section>
+
+  <!-- FORM -->
+  <section class="form-section">
+    <div class="form-header">
+      <div class="step active"><i class="fas fa-map-marked-alt"></i></div>
+      <div class="step"><i class="fas fa-couch"></i></div>
+      <div class="step"><i class="fas fa-calendar-check"></i></div>
+      <div class="step"><i class="fas fa-user-check"></i></div>
+    </div>
+
+    <form id="bookingForm">
+      <!-- Step 1 -->
+      <div class="form-step active">
+        <label>وجهة الرحلة</label>
+        <div class="creative-select" id="destination-select">
+          <div class="select-option" data-value="مكة المكرمة">
+            <i class="fas fa-kaaba"></i>
+            <h3>مكة المكرمة</h3>
+            <p>زيارة المسجد الحرام والكعبة المشرفة</p>
+            <div class="badge">الأكثر طلباً</div>
+          </div>
+          <div class="select-option" data-value="المدينة المنورة">
+            <i class="fas fa-mosque"></i>
+            <h3>المدينة المنورة</h3>
+            <p>زيارة المسجد النبوي وقبر الرسول ﷺ</p>
+          </div>
+          <div class="select-option" data-value="مكة والمدينة">
+            <i class="fas fa-map-signs"></i>
+            <h3>مكة والمدينة</h3>
+            <p>زيارة المدينتين المقدستين</p>
+            <div class="badge">عروض خاصة</div>
+          </div>
+        </div>
+        <input type="hidden" id="destination" required>
+
+        <label>نوع الرحلة</label>
+        <div class="creative-select" id="package-select">
+          <div class="select-option" data-value="اقتصادية">
+            <i class="fas fa-wallet"></i>
+            <h3>اقتصادية</h3>
+            <p>رحلة مريحة بسعر مناسب</p>
+          </div>
+          <div class="select-option" data-value="VIP">
+            <i class="fas fa-crown"></i>
+            <h3>VIP</h3>
+            <p>خدمات فاخرة وأماكن مميزة</p>
+            <div class="badge">مميز</div>
+          </div>
+        </div>
+        <input type="hidden" id="package" required>
+
+        <div class="buttons">
+          <div></div>
+          <button type="button" class="btn next-step">التالي <i class="fas fa-arrow-left"></i></button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="form-step">
+        <div class="number-selector-container">
+          <div class="number-label">
+            <label><i class="fas fa-chair"></i> عدد المقاعد</label>
+          </div>
+          <div class="number-selector">
+            <button type="button" class="number-btn" id="decrease-seats">-</button>
+            <div class="number-display" id="seats-display">1</div>
+            <button type="button" class="number-btn" id="increase-seats">+</button>
+          </div>
+          <input type="hidden" id="seats" value="1" required>
+        </div>
+
+        <div class="number-selector-container">
+          <div class="number-label">
+            <label><i class="fas fa-bed"></i> عدد الغرف</label>
+          </div>
+          <div class="number-selector">
+            <button type="button" class="number-btn" id="decrease-rooms">-</button>
+            <div class="number-display" id="rooms-display">1</div>
+            <button type="button" class="number-btn" id="increase-rooms">+</button>
+          </div>
+          <input type="hidden" id="rooms" value="1" required>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn btn-secondary prev-step"><i class="fas fa-arrow-right"></i> السابق</button>
+          <button type="button" class="btn next-step">التالي <i class="fas fa-arrow-left"></i></button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="form-step">
+        <div class="number-selector-container">
+          <div class="number-label">
+            <label><i class="fas fa-clock"></i> عدد الأيام</label>
+          </div>
+          <div class="number-selector">
+            <button type="button" class="number-btn" id="decrease-days">-</button>
+            <div class="number-display" id="days-display">3</div>
+            <button type="button" class="number-btn" id="increase-days">+</button>
+          </div>
+          <input type="hidden" id="days" value="3" required>
+        </div>
+
+        <div class="date-selector">
+          <label><i class="fas fa-calendar-alt"></i> تاريخ الرحلة</label>
+          <input type="date" id="date" class="date-input" required>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn btn-secondary prev-step"><i class="fas fa-arrow-right"></i> السابق</button>
+          <button type="button" class="btn next-step">التالي <i class="fas fa-arrow-left"></i></button>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="form-step">
+        <div class="text-input-container">
+          <label><i class="fas fa-user"></i> الاسم الكامل</label>
+          <input type="text" id="name" class="text-input" required placeholder="اكتب اسمك الكامل">
+        </div>
+
+        <div class="text-input-container">
+          <label><i class="fas fa-phone"></i> رقم الجوال</label>
+          <input type="tel" id="phone" class="text-input" required placeholder="مثال: 054xxxxxxx">
+        </div>
+
+        <div class="textarea-container">
+          <label><i class="fas fa-sticky-note"></i> ملاحظات إضافية</label>
+          <textarea id="notes" class="textarea-input" placeholder="هل لديك أي ملاحظات أو طلبات خاصة؟"></textarea>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn btn-secondary prev-step"><i class="fas fa-arrow-right"></i> السابق</button>
+          <button type="submit" class="btn"><i class="fab fa-whatsapp"></i> احجز الآن</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <script>
+    // Form Steps
+    const steps = document.querySelectorAll(".step");
+    const formSteps = document.querySelectorAll(".form-step");
+    let currentStep = 0;
+
+    function showStep(index) {
+      formSteps.forEach((step, i) => step.classList.toggle("active", i === index));
+      steps.forEach((s, i) => s.classList.toggle("active", i === index));
+    }
+
+    // Creative Select Options
+    document.querySelectorAll('.select-option').forEach(option => {
+      option.addEventListener('click', function() {
+        // Remove selected class from siblings
+        const parent = this.closest('.creative-select');
+        parent.querySelectorAll('.select-option').forEach(opt => {
+          opt.classList.remove('selected');
+        });
+        
+        // Add selected class to clicked option
+        this.classList.add('selected');
+        
+        // Update hidden input
+        const hiddenInputId = parent.id.replace('-select', '');
+        const hiddenInput = document.getElementById(hiddenInputId);
+        hiddenInput.value = this.dataset.value;
+        
+        // Animate selection
+        this.animate([
+          { transform: 'scale(1)', boxShadow: '0 6px 12px rgba(255, 152, 0, 0.15)' },
+          { transform: 'scale(1.05)', boxShadow: '0 8px 15px rgba(255, 152, 0, 0.25)' },
+          { transform: 'scale(1)', boxShadow: '0 8px 15px rgba(255, 152, 0, 0.25)' }
+        ], { duration: 300 });
+      });
+    });
+
+    // Number Selectors
+    function setupNumberSelector(displayId, inputId, decreaseBtnId, increaseBtnId, min = 1, max = 20) {
+      const display = document.getElementById(displayId);
+      const input = document.getElementById(inputId);
+      const decreaseBtn = document.getElementById(decreaseBtnId);
+      const increaseBtn = document.getElementById(increaseBtnId);
+      
+      let value = parseInt(input.value);
+      
+      function updateValue(newValue) {
+        if (newValue >= min && newValue <= max) {
+          value = newValue;
+          display.textContent = value;
+          input.value = value;
+          
+          // Animate update
+          display.animate([
+            { transform: 'scale(1)' },
+            { transform: 'scale(1.2)' },
+            { transform: 'scale(1)' }
+          ], { duration: 200 });
+        }
+      }
+      
+      decreaseBtn.addEventListener('click', () => updateValue(value - 1));
+      increaseBtn.addEventListener('click', () => updateValue(value + 1));
+      
+      // Initialize with min value
+      updateValue(min);
+    }
+    
+    // Setup all number selectors
+    setupNumberSelector('seats-display', 'seats', 'decrease-seats', 'increase-seats');
+    setupNumberSelector('rooms-display', 'rooms', 'decrease-rooms', 'increase-rooms');
+    setupNumberSelector('days-display', 'days', 'decrease-days', 'increase-days', 1, 30);
+
+    // Validation Function
+    function validateStep(stepIndex) {
+      const step = formSteps[stepIndex];
+      let isValid = true;
+      
+      // Clear previous errors
+      step.querySelectorAll('.error-msg').forEach(err => err.remove());
+      step.querySelectorAll('.text-input, .date-input, .textarea-input').forEach(input => {
+        input.style.borderColor = '#FFCC80';
+      });
+
+      // Validate based on step
+      if (stepIndex === 0) {
+        // Step 1: Destination and Package
+        const destination = document.getElementById('destination');
+        const pkg = document.getElementById('package');
+        
+        if (!destination.value) {
+          isValid = false;
+          showError(destination, 'يرجى اختيار وجهة الرحلة');
+        }
+        
+        if (!pkg.value) {
+          isValid = false;
+          showError(pkg, 'يرجى اختيار نوع الرحلة');
+        }
+      } else if (stepIndex === 3) {
+        // Step 4: Name and Phone
+        const name = document.getElementById('name');
+        const phone = document.getElementById('phone');
+        
+        if (!name.value.trim()) {
+          isValid = false;
+          showError(name, 'يرجى كتابة الاسم الكامل');
+          name.style.borderColor = '#f44336';
+        }
+        
+        if (!phone.value.trim()) {
+          isValid = false;
+          showError(phone, 'يرجى كتابة رقم الجوال');
+          phone.style.borderColor = '#f44336';
+        } else if (!/^05\d{8}$/.test(phone.value.replace(/\D/g, ''))) {
+          isValid = false;
+          showError(phone, 'يرجى كتابة رقم جوال صحيح (مثال: 054xxxxxxx)');
+          phone.style.borderColor = '#f44336';
+        }
+      }
+      
+      return isValid;
+    }
+    
+    function showError(element, message) {
+      const error = document.createElement('div');
+      error.className = 'error-msg';
+      error.textContent = message;
+      element.insertAdjacentElement('afterend', error);
+    }
+
+    // Navigation between steps
+    document.querySelectorAll(".next-step").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (validateStep(currentStep)) {
+          if (currentStep < formSteps.length - 1) {
+            currentStep++;
+            showStep(currentStep);
+          }
+        }
+      });
+    });
+
+    document.querySelectorAll(".prev-step").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (currentStep > 0) {
+          currentStep--;
+          showStep(currentStep);
+        }
+      });
+    });
+
+    // Form Submission
+    document.getElementById("bookingForm").addEventListener("submit", e => {
+      e.preventDefault();
+      if (!validateStep(currentStep)) return;
+
+      const data = {
+        destination: document.getElementById("destination").value,
+        pkg: document.getElementById("package").value,
+        seats: document.getElementById("seats").value,
+        rooms: document.getElementById("rooms").value,
+        days: document.getElementById("days").value,
+        date: document.getElementById("date").value,
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        notes: document.getElementById("notes").value
+      };
+
+      const msg =
+        `مرحباً، أود حجز رحلة عمرة مع حملة سعود القويضي:\n\n` +
+        `🏙 الوجهة: ${data.destination}\n🎯 نوع الرحلة: ${data.pkg}\n💺 المقاعد: ${data.seats}\n🏨 الغرف: ${data.rooms}\n🕒 الأيام: ${data.days}\n📅 التاريخ: ${data.date}\n👤 الاسم: ${data.name}\n📱 الجوال: ${data.phone}\n📝 ملاحظات: ${data.notes || "لا يوجد"}`;
+
+      // رقم الواتساب المطلوب
+      window.open(`https://wa.me/966583572732?text=${encodeURIComponent(msg)}`, "_blank");
+    });
+
+    // Set minimum date to today
+    const dateInput = document.getElementById('date');
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    dateInput.min = formattedDate;
+    dateInput.value = formattedDate;
+    
+    // Add some initial selections
+    document.addEventListener('DOMContentLoaded', function() {
+      // Select first option in each creative select by default
+      document.querySelectorAll('.creative-select').forEach(select => {
+        const firstOption = select.querySelector('.select-option');
+        if (firstOption) {
+          firstOption.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
